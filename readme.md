@@ -7,8 +7,9 @@ UInt128, and providing non-allocating accessors for data fields.
 
 These benchmark results compare the lookup of 10k random IPv4 addresses from the DB5 database:
 
-|             Method |         Mean | Ratio |  Allocated | Alloc Ratio |
-|------------------- |-------------:|------:|-----------:|------------:|
-| IP2LocLookup       | 592,421.2 us | 1.000 | 70394216 B |       1.000 |
-| SylvanLookupSpan   |     799.2 us | 0.001 |        1 B |       0.000 |
-| SylvanLookupString |   1,382.4 us | 0.002 |   794226 B |       0.011 |
+|             Method |       Mean |      Error |     StdDev | Ratio |       Gen0 |  Allocated | Alloc Ratio |
+|------------------- |-----------:|-----------:|-----------:|------:|-----------:|-----------:|------------:|
+|       IP2LocLookup | 676.620 ms | 12.8019 ms | 14.7427 ms | 1.000 | 19000.0000 | 80106568 B |       1.000 |
+|    IP2LocMMFLookup |  70.641 ms |  1.3806 ms |  1.6435 ms | 0.105 |  7250.0000 | 30636784 B |       0.382 |
+|   SylvanLookupSpan |   1.034 ms |  0.0068 ms |  0.0056 ms | 0.002 |          - |        2 B |       0.000 |
+| SylvanLookupString |   1.444 ms |  0.0232 ms |  0.0206 ms | 0.002 |   189.4531 |   795610 B |       0.010 |

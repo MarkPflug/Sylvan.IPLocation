@@ -14,6 +14,7 @@ public class LookupBench
     //const string Path = @"C:\data\IPDb\IP2LOCATION-LITE-DB5.IPV6.BIN";
     
     IP2Location.Component vb;
+    IP2Location.Component vbMMF;
     Sylvan.IPLocation.Database db;
     
     string[] addrStrs;
@@ -23,7 +24,10 @@ public class LookupBench
     public LookupBench()
     {
         vb = new IP2Location.Component();
-        vb.Open(Path);
+        vb.Open(Path, false);
+
+        vbMMF = new IP2Location.Component();
+        vbMMF.Open(Path, true);
         db = new Sylvan.IPLocation.Database(Path);
 
         byte[] buf = new byte[4];
@@ -45,6 +49,19 @@ public class LookupBench
         foreach(var str in addrStrs)
         {
             var r = vb.IPQuery(str);
+            var c = r.City;
+            var rg = r.Region;
+            var lat = r.Latitude;
+            var lon = r.Longitude;
+        }
+    }
+
+    [Benchmark]
+    public void IP2LocMMFLookup()
+    {
+        foreach (var str in addrStrs)
+        {
+            var r = vbMMF.IPQuery(str);
             var c = r.City;
             var rg = r.Region;
             var lat = r.Latitude;
